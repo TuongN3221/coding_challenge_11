@@ -73,15 +73,49 @@ class Library {
     };// Sets up empty books and borrowers array
     addBook(book){
         this.books.push(book);
-    }// Adds the book from the Book Class
+    };// Adds the book from the Book Class
     listBooks(){
-        this.books.forEach(book => console.log(book.getDetails))
-    }
-    addBorrowers(borrower){
+        this.books.forEach(book => console.log(book.getDetails()))
+    };
+    addBorrower(borrower){
         this.borrowers.push(borrower);
-    }// Logs the borrower from the Borrower Class
+    };// Logs the borrower from the Borrower Class
+    findBook(isbn){
+        return this.books.find(book => book.isbn === isbn);
+    }
+    findBorrower(borrowerId){
+        return this.borrowers.find(borrower => borrower.borrowerId === borrowerId)
+    }
+// Task 4 
+    lendBook(borrowerId, isbn){
+        const book = this.findBook(isbn)
+        const borrower = this.findBorrower(borrowerId)
+        if(!book){
+            console.log(`Book with ISBN ${isbn} Cannot Be Found`)
+            return;
+        }
+        if(!borrower){
+            console.log(`Borrower with ID ${borrowerId} Cannot Be Found`)
+            return;
+        }
+        if(book.copies <= 0){
+            console.log(`There are Not Enough Copies of ${book.title}`)
+            return;
+        }
+        book.updateCopies(-1)
+        borrower.borrowBook(book);
+        console.log(`${borrower.name} has borrowed ${book.title}`)
+    };
 }
+// Task 3 Test Cases
 const library = new Library();
 library.addBook(book1);
 library.listBooks();
 // Expected output: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 4"
+// Task 4 Test Cases
+library.addBorrower(borrower1);
+library.lendBook(201, 123456);
+console.log(book1.getDetails());
+// Expected output: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 3"
+console.log(borrower1.borrowedBooks);
+// Expected output: ["The Great Gatsby"]
