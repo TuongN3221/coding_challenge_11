@@ -23,3 +23,44 @@ console.log(book1.getDetails());
 book1.updateCopies(-1);
 console.log(book1.getDetails());
 // Expected output: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 4"
+
+// Task 2 Creating A Borrower Class
+class Borrower {
+    constructor(name, borrowerId) {
+        this.name = name; // String - The name of the borrower
+        this.borrowerId = borrowerId; // Number - The unique ID for the borrower
+        this.borrowedBooks = []; // Array - The books borrowed by the borrower
+    }
+    // Method to borrow a book
+    borrowBook(book) {
+        // Check if the book has available copies
+        if (book.copies > 0) {
+            this.borrowedBooks.push(book.title);// Add the book title to the borrowedBooks array
+ 
+            book.updateCopies(-1);
+            return `${this.name} Successfully Borrowed "${book.title}".`;// Decrease the available copies of the book
+        } else {
+            return `${book.title} Is Currently Not Available.`;
+        }
+    }
+    returnBook(book) {
+        // Checks if the borrower has the book in their borrowedBooks array
+        const index = this.borrowedBooks.indexOf(book.title);
+        if (index !== -1) {
+            // Remove the book title from the borrowedBooks array
+            this.borrowedBooks.splice(index, 1);
+            // Increase the available copies of the book now that it has been returned
+            book.updateCopies(1);
+            return `${this.name} Successfully Returned "${book.title}".`;
+        } else {
+            return `This Book Was Not Borrowed By ${this.name}.`;
+        }
+    }
+}
+// Task 2 Test Cases
+const borrower1 = new Borrower("Alice Johnson", 201);
+console.log(borrower1.borrowBook(book1)); // Expected: "Alice Johnson successfully borrowed 'The Great Gatsby'."
+console.log(borrower1.borrowedBooks); // Expected: ["The Great Gatsby"]
+
+console.log(borrower1.returnBook(book1)); // Expected: "Alice Johnson successfully returned 'The Great Gatsby'."
+console.log(borrower1.borrowedBooks); // Expected: []
