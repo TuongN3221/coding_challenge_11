@@ -56,14 +56,14 @@ class Borrower {
             return `This Book Was Not Borrowed By ${this.name}.`;
         }
     }
-}
+};
 // Task 2 Test Cases
 const borrower1 = new Borrower("Alice Johnson", 201);
 console.log(borrower1.borrowBook(book1)); // Expected: "Alice Johnson successfully borrowed 'The Great Gatsby'."
-console.log(borrower1.borrowedBooks); // Expected: ["The Great Gatsby"]
+console.log(JSON.stringify(borrower1.borrowedBooks)); // Expected: ["The Great Gatsby"]
 
 console.log(borrower1.returnBook(book1)); // Expected: "Alice Johnson successfully returned 'The Great Gatsby'."
-console.log(borrower1.borrowedBooks); // Expected: []
+console.log(JSON.stringify(borrower1.borrowedBooks)); // Expected: []
 
 // Task 3 Creating A Library Class
 class Library {
@@ -131,11 +131,11 @@ library.addBorrower(borrower1);
 library.lendBook(201, 123456);
 console.log(book1.getDetails());
 // Expected output: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 3"
-console.log(borrower1.borrowedBooks);
+console.log(JSON.stringify(borrower1.borrowedBooks));
 // Expected output: ["The Great Gatsby"]
 // Task 5 Test Cases
 library.returnBook(201, 123456);
 console.log(book1.getDetails());
 // Expected output: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 4"
-console.log(borrower1.borrowedBooks);
+console.log(JSON.stringify(borrower1.borrowedBooks));
 // Expected output: []
