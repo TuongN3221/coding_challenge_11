@@ -91,34 +91,34 @@ class Library {
         const book = this.findBook(isbn)
         const borrower = this.findBorrower(borrowerId)
         if(!book){
-            console.log(`Book with ISBN ${isbn} Cannot Be Found`)
+            console.log(`Book with ISBN ${isbn} Cannot Be Found.`)
             return;
         }
         if(!borrower){
-            console.log(`Borrower with ID ${borrowerId} Cannot Be Found`)
+            console.log(`Borrower with ID ${borrowerId} Cannot Be Found.`)
             return;
         }
         if(book.copies <= 0){
-            console.log(`There are Not Enough Copies of ${book.title}`)
+            console.log(`There are Not Enough Copies of ${book.title} Available.`)
             return;
-        }
-        book.updateCopies(-1)
-        borrower.borrowBook(book);
+        }// Contingencies if the book and borrower cannot be found or if there are not enough copies
+        book.updateCopies(-1)// Reduces the amount of avialable copies
+        borrower.borrowBook(book);// Updates the borrower lists
         console.log(`${borrower.name} has borrowed ${book.title}`)
     };
     returnBook(borrowerId, isbn){
          const book = this.findBook(isbn);
-            const borrower = this.findBorrower(borrowerId);
+         const borrower = this.findBorrower(borrowerId);
         if (!book){
             console.log(`Book with ISBN ${isbn} Cannot Be Found`)
             return;
-        }
+        }// Returns this if the book being returned isn't tied to the borrower by ISBN
         if(!borrower){
             console.log(`Borrower with ID ${borrowerId} Cannot Be Found`)
             return;
-        }
+        }// Will return this if a book is returned, but not tied to the borrower 
         borrower.returnBook(book);
-        book.updateCopies(1);
+        book.updateCopies(1);// Increases the total books upon returning
     }
 };
 // Task 3 Test Cases
